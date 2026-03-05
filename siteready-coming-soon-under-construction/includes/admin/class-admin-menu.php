@@ -183,7 +183,7 @@ class SRUC_Admin_Menu
                 if ($active_template == $template->ID) {
                     echo '<button type="submit" class="button button-primary" disabled>' . esc_html__('Active Template', 'siteready-coming-soon-under-construction') . '</button>';
                 } else {
-                    echo '<button type="submit" class="button">' . esc_html__('Set as Active', 'siteready-coming-soon-under-construction') . '</button>';
+                    echo '<button type="submit" class="button button-primary">' . esc_html__('Set as Active', 'siteready-coming-soon-under-construction') . '</button>';
                 }
                 echo '</form>';
 
@@ -198,7 +198,9 @@ class SRUC_Admin_Menu
         echo '</div>';
 
         /** ---------------- Right Column ( Settings ) ---------------- */
-        echo '<div>';
+
+        echo '<div class="sruc-template-settings">';
+        echo '<div class="sruc-template-settings-inner">';
         echo '<h2>' . esc_html__('Template Settings', 'siteready-coming-soon-under-construction') . '</h2>';
 
         // Show active template notice
@@ -222,7 +224,7 @@ class SRUC_Admin_Menu
                 '_wpnonce' => $nonce,
             ), home_url('/'));
 
-            echo '<div class="sruc-preview-link my-3 d-flex justify-content-end" >';
+            echo '<div class="sruc-preview-link  d-flex justify-content-end" >';
             echo '<a href="' . esc_url($preview_url) . '" target="_blank" class="button button-secondary">';
             echo esc_html__('Preview Template', 'siteready-coming-soon-under-construction');
             echo '</a>';
@@ -244,7 +246,7 @@ class SRUC_Admin_Menu
             </li>
         </ul>';
 
-        echo '<div class="tab-content mt-3" id="SRUCTabContent">';
+        echo '<div class="tab-content" id="SRUCTabContent">';
         $this->render_text_tab($current_template);
         echo '<div class="tab-pane" id="font" role="tabpanel">';
         $this->render_font_tab($current_template);
@@ -258,6 +260,7 @@ class SRUC_Admin_Menu
             </div>
             </div>';
 
+        echo '</div>';
         echo '</div>';
 
         echo '</div>';

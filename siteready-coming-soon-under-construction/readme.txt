@@ -4,7 +4,7 @@ Tags: coming soon, coming soon page, maintenance mode, under construction, under
 Requires at least: 5.2
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ Browse the complete Pro templates along with the WordPress Theme Bundle you bega
 Because first impressions start before your site goes live.
 
 == Changelog ==
+
+= 1.0.5 - 28-02-2026 =
+* Updated - Ui of template settings section.
 
 = 1.0.4 - 05-02-2026 =
 * Added - Custom CSS Tab to override default styles.

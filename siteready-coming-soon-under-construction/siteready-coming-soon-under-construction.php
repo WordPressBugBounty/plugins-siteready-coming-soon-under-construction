@@ -3,7 +3,7 @@
  * Plugin Name: Siteready Coming Soon Under Construction
  * Plugin URI: 
  * Description: Display a customizable coming soon or maintenance page with countdown and live preview — perfect for launches, redesigns, or site updates.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author: themescart
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 define('SRUC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('SRUC_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('SRUC_PLUGIN_VERSION', '1.0.4');
+define('SRUC_PLUGIN_VERSION', '1.0.5');
 define('SRUC_THEME_BUNDLE_IMAGE_URL', plugin_dir_url(__FILE__) . 'assets/admin/images/get-theme-bundle-img.png');
 define('SRUC_ELEMENTO_API_MAIN', 'https://www.themescarts.com/');
 
