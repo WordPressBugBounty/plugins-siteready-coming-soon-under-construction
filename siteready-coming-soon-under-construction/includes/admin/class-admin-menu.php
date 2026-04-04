@@ -89,6 +89,11 @@ class SRUC_Admin_Menu
                 ))); ?>' class="nav-tab <?php echo $active_tab === 'templates' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Coming Soon Templates', 'siteready-coming-soon-under-construction');
                           ?></a>
 
+                <a href="<?php echo esc_url($this->sruc_admin_url(array('tab' => 'settings'))); ?>"
+                    class="nav-tab <?php echo $active_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
+                    <?php esc_html_e('Settings', 'siteready-coming-soon-under-construction'); ?>
+                </a>
+
                 <a href="<?php echo esc_url($this->sruc_admin_url(array('tab' => 'theme_templates'))); ?>"
                     class="nav-tab <?php echo $active_tab === 'theme_templates' ? 'nav-tab-active' : ''; ?>">
                     <?php esc_html_e('Website Templates', 'siteready-coming-soon-under-construction'); ?>
@@ -100,7 +105,11 @@ class SRUC_Admin_Menu
             <?php
             if ($active_tab === 'templates') {
                 $this->render_templates_tab();
-            } elseif ($active_tab === 'theme_templates') {
+            }
+            elseif ($active_tab === 'settings') {
+                $this->render_settings_tab();
+            } 
+            elseif ($active_tab === 'theme_templates') {
                 $this->render_theme_templates_tab();
             }
             ?>
@@ -279,7 +288,6 @@ class SRUC_Admin_Menu
         }
 
     }
-
 
     private function render_text_tab($current_template)
     {
@@ -504,7 +512,52 @@ class SRUC_Admin_Menu
         echo '</div>';
     }
 
+    public function render_settings_tab()
+    {
+        if (!isset($_GET['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'sruc_settings_nonce')) {
+            wp_die(esc_html__('Security check failed.', 'siteready-coming-soon-under-construction'));
+        }
 
+        $enabled = get_option('sruc_enabled', 0);
+        $auto_time = get_option('sruc_auto_disable_time', '');
+
+        echo '<div class="wrap">';
+        echo '<div class="">';
+
+        /** ---------------- RIGHT SIDE (MAIN SETTINGS UI) ---------------- */
+        echo '<div class="sruc-template-settings">';
+        echo '<div class="sruc-template-settings-inner sruc-template-settings-inner-width mt-0">';
+
+        echo '<h2>' . esc_html__('General Settings', 'siteready-coming-soon-under-construction') . '</h2>';
+        echo '<p>' . esc_html__('Configure global settings for maintenance mode.', 'siteready-coming-soon-under-construction') . '</p>';
+
+        echo '<form method="post">';
+        wp_nonce_field('sruc_settings_nonce');
+
+        echo '<table class="form-table">';
+
+        /** Auto Disable Time */
+        echo '<tr>';
+        echo '<th>' . esc_html__('Auto Disable Time', 'siteready-coming-soon-under-construction') . '</th>';
+        echo '<td>';
+        echo '<input type="datetime-local" name="sruc_auto_disable_time" value="' . esc_attr($auto_time) . '" class="regular-text">';
+        echo '<p class="description">' . esc_html__('Set a date & time to automatically disable maintenance mode.', 'siteready-coming-soon-under-construction') . '</p>';
+        echo '</td>';
+        echo '</tr>';
+
+        echo '</table>';
+
+        echo '<input type="hidden" name="sruc_save_settings" value="1">';
+        submit_button(esc_html__('Save Settings', 'siteready-coming-soon-under-construction'));
+
+        echo '</form>';
+
+        echo '</div>'; // inner
+        echo '</div>'; // right panel
+
+        echo '</div>'; // inner wrap
+        echo '</div>'; // wrap
+    }
 
     public function handle_template_meta_save()
     {
@@ -566,6 +619,19 @@ class SRUC_Admin_Menu
 
             // wp_safe_redirect( admin_url( 'admin.php?page=sruc-settings&tab=templates&template_id=' . $template_id  ) );
             exit;
+        }
+
+        if (isset($_POST['sruc_save_settings']) && current_user_can('manage_options')) {
+
+            if (!isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['_wpnonce'])), 'sruc_settings_nonce')) {
+                wp_die('Security check failed');
+            }
+
+            $time = isset($_POST['sruc_auto_disable_time']) 
+                ? sanitize_text_field($_POST['sruc_auto_disable_time']) 
+                : '';
+
+            update_option('sruc_auto_disable_time', $time);
         }
     }
 

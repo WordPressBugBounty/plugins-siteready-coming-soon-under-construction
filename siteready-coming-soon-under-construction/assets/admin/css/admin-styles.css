@@ -334,3 +334,9 @@
     padding: 0;
     margin: 0;
 }
+
+
+
+.sruc-template-settings-inner-width{
+    max-width: 100%;
+}
