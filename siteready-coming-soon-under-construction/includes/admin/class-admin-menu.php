@@ -77,7 +77,7 @@ class SRUC_Admin_Menu
             wp_die(esc_html__('Security check failed.', 'siteready-coming-soon-under-construction'));
         }
         $active_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'templates';
-
+        $current_template = isset($_GET['template_id']) ? intval($_GET['template_id']) : 0;
         ?>
         <div class='wrap'>
             <h1 class="plug-main-head"><?php esc_html_e('Siteready Coming Soon Under Construction', 'siteready-coming-soon-under-construction');
@@ -85,16 +85,17 @@ class SRUC_Admin_Menu
 
             <h2 class='nav-tab-wrapper'>
                 <a href='<?php echo esc_url($this->sruc_admin_url(array(
-                    'tab' => 'templates'
+                    'tab' => 'templates',
+                    'template_id' => $current_template
                 ))); ?>' class="nav-tab <?php echo $active_tab === 'templates' ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Coming Soon Templates', 'siteready-coming-soon-under-construction');
                           ?></a>
 
-                <a href="<?php echo esc_url($this->sruc_admin_url(array('tab' => 'settings'))); ?>"
+                <a href="<?php echo esc_url($this->sruc_admin_url(array('tab' => 'settings','template_id' => $current_template))); ?>"
                     class="nav-tab <?php echo $active_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
                     <?php esc_html_e('Settings', 'siteready-coming-soon-under-construction'); ?>
                 </a>
 
-                <a href="<?php echo esc_url($this->sruc_admin_url(array('tab' => 'theme_templates'))); ?>"
+                <a href="<?php echo esc_url($this->sruc_admin_url(array('tab' => 'theme_templates','template_id' => $current_template))); ?>"
                     class="nav-tab <?php echo $active_tab === 'theme_templates' ? 'nav-tab-active' : ''; ?>">
                     <?php esc_html_e('Website Templates', 'siteready-coming-soon-under-construction'); ?>
                 </a>
@@ -165,6 +166,12 @@ class SRUC_Admin_Menu
                 $highlight = ($active_template == $template->ID)
                     ? 'border:2px solid #28a745; box-shadow:0 0 8px rgba(40,167,69,.5);'
                     : 'border:1px solid #ddd;';
+
+                if($current_template == $template->ID) {
+                    $highlight = ($current_template == $template->ID)
+                    ? 'border:2px solid #3730a3; box-shadow:0 0 8px rgba(40, 63, 167, 0.5);'
+                    : 'border:1px solid #ddd;';
+                }
 
                 echo '<div class="sruc-template-card" style="' . esc_attr($highlight) . '">';
                 echo '<a class="sruc-template-card-link" href="' . esc_url(

@@ -340,3 +340,19 @@
 .sruc-template-settings-inner-width{
     max-width: 100%;
 }
+
+@media (max-width: 767px) {
+.sruc-inner-wrap {
+    display: block !important;
+}
+
+
+}
+
+@media (max-width: 991px) {
+.sruc-inner-wrap {
+    display: block !important;
+}
+
+
+}
